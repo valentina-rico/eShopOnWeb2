@@ -5,7 +5,11 @@ on: [push, workflow_dispatch]
 
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
-   credentials: ${{ secrets.AZURE_CREDENTIALS }}
+   RESOURCE-GROUP: rg-az400-eshoponweb-prueba
+   LOCATION: southcentralus
+   TEMPLATE-FILE: .azure/bicep/webapp.bicep
+   SUBSCRIPTION-ID: e63b0417-2ec1-4083-ad06-a778e3f5281f
+   WEBAPP-NAME: az400-pru-WebApp
 
 jobs:
   #Build, test and publish .net web project in repository
@@ -68,6 +72,8 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS}}
+      env: # Or as an environment variable
+        credentials: ${{ secrets.AZURE_CREDENTIALS }}
            
     # Deploy Azure WebApp using Bicep file
     - name: deploy
